@@ -1,2 +1,4 @@
-# Fiocco_di_neve
- Questo software genera un fiocco di neve partendo da un triangolo ritagliato dall'utilizzatore.
+# Fiocco di neve
+ Questo software genera un fiocco di neve partendo dagli scarti di un triangolo ritagliato dall'utilizzatore.
+
+
