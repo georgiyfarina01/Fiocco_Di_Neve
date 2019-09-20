@@ -9,7 +9,7 @@
 1. [Analisi](#analisi)
 
   - [Analisi del dominio](#analisi-del-dominio)
-  
+
   - [Analisi dei mezzi](#analisi-dei-mezzi)
 
   - [Analisi e specifica dei requisiti](#analisi-e-specifica-dei-requisiti)
@@ -96,7 +96,7 @@
 
 ### Analisi del dominio
 
-  Di solito siamo abituati a creare dei fiocchi di neve partendo da un foglio di carta, delle forbici e un po di fantasia mista a creatività. Utilizzando questo software sviluppato interamente in Java versione 12.0.1 avrete la possibilità di fare tutto ciò con un paio di click sul computer. 
+  Di solito siamo abituati a creare dei fiocchi di neve partendo da un foglio di carta, delle forbici e un po di fantasia mista a creatività. Utilizzando questo software sviluppato interamente in Java versione 12.0.1 avrete la possibilità di fare tutto ciò con un paio di click sul computer.
 
   -   Background/Situazione iniziale
 
@@ -157,13 +157,24 @@
 
 
 
-  |**ID**	|**Nome**			|**Priorità**|**Vers**|**Note**  |
-  |----|------------|--------|----|------|
-  |Req-12|Dovrà esserci una maschera di login|1|1.0|...|
-  |Req-13|Si dovranno poter immettere nuovi allievi|1|1.0|...|
-  |Req-14|Dovrà essere possibile la ricerca di allievi|1|1.0|...|
-  
-  
+  |**ID**	|**Nome**|**Categoria**| **Priorità**|**Vers**|**Note**  |
+  |----|------------|-------|--------|----|------|
+  |01|Sito con descrizione software|Sito|4|1.0|...|
+  |02|Possibilità di scaricare il software dal sito|Sito|3|1.0|...|
+  |03|Lista di requisiti di sistema per l'utilizzo |Sito|1|1.0|...|
+  |04|Presenza di interfaccia grafica|Software|1|1.0|...|
+  |05|Si deve poter resettare i punti di ritaglio|Software|1|1.0|...|
+  |06|Presenza di un tasto "genera fiocco"|Software|1|1.0|...|
+  |07|La generazione può avvenire in tempo reale|Software|1|1.0|...|
+  |08|I punti possono essere spostati o rimossi|Software|1|1.0|...|
+  |09|Si deve poter salvare il fiocco|Salvataggio fiocco|1|1.0|...|
+  |10|Il salvataggio avviene in formato PNG o SVG|Salvataggio fiocco|1|1.0|...|
+  |11|Le dimensioni dell'immagine sono definite dall'utente|Salvataggio fiocco|1|1.0|...|
+  |12|Si può salvare i punti di ritaglio|Sito|1|1.0|...|
+  |13|Finestra ridimensionabile con dimensioni default 1024x768|Interfaccia programma|1|1.0|...|
+
+
+
 
 
 
