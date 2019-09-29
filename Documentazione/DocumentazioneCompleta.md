@@ -163,15 +163,16 @@
   |02|Possibilità di scaricare il software dal sito|Sito|3|1.0|...|
   |03|Lista di requisiti di sistema per l'utilizzo |Sito|1|1.0|...|
   |04|Presenza di interfaccia grafica|Software|1|1.0|...|
-  |05|Si deve poter resettare i punti di ritaglio|Software|1|1.0|...|
-  |06|Presenza di un tasto "genera fiocco"|Software|1|1.0|...|
-  |07|La generazione può avvenire in tempo reale|Software|1|1.0|...|
-  |08|I punti possono essere spostati o rimossi|Software|1|1.0|...|
-  |09|Si deve poter salvare il fiocco|Salvataggio fiocco|1|1.0|...|
-  |10|Il salvataggio avviene in formato PNG o SVG|Salvataggio fiocco|1|1.0|...|
-  |11|Le dimensioni dell'immagine sono definite dall'utente|Salvataggio fiocco|1|1.0|...|
-  |12|Si può salvare i punti di ritaglio|Sito|1|1.0|...|
-  |13|Finestra ridimensionabile con dimensioni default 1024x768|Interfaccia programma|1|1.0|...|
+  |05|Il triangolo si deve trovare in centro del panel|Software|1|1.0|...|
+  |06|Si deve poter resettare i punti di ritaglio|Software|1|1.0|...|
+  |07|Presenza di un tasto "genera fiocco"|Software|1|1.0|...|
+  |08|La generazione può avvenire in tempo reale|Software|1|1.0|...|
+  |09|I punti possono essere spostati o rimossi|Software|1|1.0|...|
+  |10|Si deve poter salvare il fiocco|Salvataggio fiocco|1|1.0|...|
+  |11|Il salvataggio avviene in formato PNG o SVG|Salvataggio fiocco|1|1.0|...|
+  |12|Le dimensioni dell'immagine sono definite dall'utente|Salvataggio fiocco|1|1.0|...|
+  |13|Si può salvare i punti di ritaglio|Sito|1|1.0|...|
+  |14|Finestra ridimensionabile con dimensioni default 1024x768|Interfaccia programma|1|1.0|...|
 
 
 
@@ -209,18 +210,9 @@ funzionalità del prodotto.
 
 ### Pianificazione
 
-Prima di stabilire una pianificazione bisogna avere almeno una vaga idea
-del modello di sviluppo che si intende adottare. In questa sezione
-bisognerà inserire il modello concettuale di sviluppo che si seguirà
-durante il progetto. Gli elementi di riferimento per una buona
-pianificazione derivano da una scomposizione top-down della problematica
-del progetto.
-
-La pianificazione può essere rappresentata mediante un diagramma di
-Gantt.
-
-Se si usano altri metodi di pianificazione (es scrum), dovranno apparire
-in questo capitolo.
+<img src="Gantt_Iniziale.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
 
 ### Analisi dei mezzi
 
