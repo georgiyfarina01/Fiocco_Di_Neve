@@ -55,9 +55,7 @@
 
 ### Abstract
 
-  Questo lavoro è stato assegnato con le stesse specifiche a 2 classi di informatica del terzo anno. Vi è stata possibilità di scegliere se sviluppare il software con l'ulitizzo o di Javascript, creando per questo un sito apposito interamente dedicato, o di Java dove si doveva sviluppare un software scaricabile da un piccolo sito. Con l'utilizzo di questo strumento ora è possibile creare dei fiocchi in poco tempo semplicemente ritagliando un triangolo avendo così modo di scatenare all'infinito la propria fantasia facendo e rifacendo quanti fiocchi si vuole senza doverli buttare nel cestino nel caso non dovessero piacere. Esistono
-
-  Può contenere alcuni o tutti gli elementi seguenti:
+  Questo lavoro è stato assegnato con le stesse specifiche a 2 classi di informatica del terzo anno. Vi è stata possibilità di scegliere se sviluppare il software con l'ulitizzo o di Javascript, creando per questo un sito apposito interamente dedicato, o di Java dove si doveva sviluppare un software scaricabile da un piccolo sito. Con l'utilizzo di questo strumento ora è possibile creare dei fiocchi in poco tempo semplicemente ritagliando un triangolo avendo così modo di scatenare all'infinito la propria fantasia facendo e rifacendo quanti fiocchi si vuole senza doverli buttare nel cestino nel caso non dovessero piacere. Esistono diverse varianti di questo software, ma la mia versione permetterà di eseguire funzioni quali (CONTINUARE!!!!!!!!!!!!!!!)
 
   -   **Background/Situazione iniziale**
 
