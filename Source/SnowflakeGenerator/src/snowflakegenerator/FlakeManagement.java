@@ -2,6 +2,7 @@ package snowflakegenerator;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.List;
 import java.awt.Point;
 import java.awt.Polygon;
@@ -11,8 +12,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.geom.Area;
+import java.awt.geom.PathIterator;
 /**
  *
  * @author Georgiy Farina
@@ -26,17 +33,13 @@ public class FlakeManagement extends JFrame{
     
     private List<Point> punti;
     
-    private int contenitoreTriangolo[] = new int[4];
-    
     private int bordoOrizzontale = 100;
     
-    private int bordoVerticale = 194;
+    private int catetoMaggiore = height/2;
     
-    private int larghezzaContenitore = 300;
+    private int catetoMinore = (int)(catetoMaggiore/Math.sqrt(3));
     
-    private int altezzaContenitore = 400;
-    
-    private int altezzaTriangolo = height/2;
+    private int ipotenusa = catetoMinore*2;
     
     private int x[];
     
@@ -44,8 +47,16 @@ public class FlakeManagement extends JFrame{
     
     private Polygon forma = new Polygon();
     
+    private Polygon triangolo = new Polygon();
     
     public static final int DIM_MIN[] = {1024,768};
+    
+    private Area areaForma = new Area(forma);
+    
+    private Area areaTriangolo = new Area(triangolo);
+    
+    
+    private Area areaFinale;
 
     /**
      * Creates new form FlakeManagement
@@ -60,13 +71,11 @@ public class FlakeManagement extends JFrame{
                 addPunto(e.getPoint());
                 repaint();
             }
-        });
+        }); 
         
-        this.contenitoreTriangolo[0] = 100;
-        this.contenitoreTriangolo[1] = 194;
-        this.contenitoreTriangolo[2] = 300;
-        this.contenitoreTriangolo[3] = 400;
-        
+        triangolo.addPoint(bordoOrizzontale, height/4);
+        triangolo.addPoint(bordoOrizzontale+catetoMinore, height/4);
+        triangolo.addPoint(bordoOrizzontale+catetoMinore, height/4 + catetoMaggiore);
     }
     
     /*public void redraw() {
@@ -102,6 +111,9 @@ public class FlakeManagement extends JFrame{
 
         jLabel1 = new javax.swing.JLabel();
         bottoneIndietro = new javax.swing.JButton();
+        bottoneSalva = new javax.swing.JButton();
+        bottoneReset = new javax.swing.JButton();
+        bottoneGenera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 768));
@@ -126,6 +138,51 @@ public class FlakeManagement extends JFrame{
             }
         });
 
+        bottoneSalva.setBackground(new java.awt.Color(255, 51, 51));
+        bottoneSalva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bottoneSalva.setText("Salva");
+        bottoneSalva.setName(""); // NOI18N
+        bottoneSalva.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                bottoneSalvaComponentHidden(evt);
+            }
+        });
+        bottoneSalva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bottoneSalva(evt);
+            }
+        });
+
+        bottoneReset.setBackground(new java.awt.Color(255, 51, 51));
+        bottoneReset.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bottoneReset.setText("Reset");
+        bottoneReset.setName(""); // NOI18N
+        bottoneReset.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                bottoneReset1ComponentHidden(evt);
+            }
+        });
+        bottoneReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bottoneReset1(evt);
+            }
+        });
+
+        bottoneGenera.setBackground(new java.awt.Color(255, 51, 51));
+        bottoneGenera.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bottoneGenera.setText("Genera");
+        bottoneGenera.setName(""); // NOI18N
+        bottoneGenera.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                bottoneGeneraComponentHidden(evt);
+            }
+        });
+        bottoneGenera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bottoneGenera(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,13 +192,23 @@ public class FlakeManagement extends JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(bottoneIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addContainerGap(872, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(bottoneSalva, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(bottoneReset, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(bottoneGenera, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(461, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bottoneIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bottoneIndietro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bottoneSalva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bottoneReset, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bottoneGenera, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 575, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(142, 142, 142))
@@ -163,34 +230,100 @@ public class FlakeManagement extends JFrame{
         
     }//GEN-LAST:event_bottoneIndietroComponentHidden
 
+    private void bottoneSalvaComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_bottoneSalvaComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bottoneSalvaComponentHidden
+
+    private void bottoneSalva(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottoneSalva
+        JFileChooser fileChooser = new JFileChooser();
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        int ris = fileChooser.showOpenDialog(this);
+        if (ris == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        }
+    }//GEN-LAST:event_bottoneSalva
+
+    private void bottoneReset1ComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_bottoneReset1ComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bottoneReset1ComponentHidden
+
+    private void bottoneReset1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottoneReset1
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bottoneReset1
+
+    private void bottoneGeneraComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_bottoneGeneraComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bottoneGeneraComponentHidden
+
+    private void bottoneGenera(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottoneGenera
+        
+        this.areaTriangolo.subtract(areaForma);
+        
+        PathIterator iterator = areaTriangolo.getPathIterator(null);
+        
+        Polygon triangoloNuovo = new Polygon();
+        float[] floats = new float[6];
+        while (!iterator.isDone()) {
+            int type = iterator.currentSegment(floats);
+            int x = (int) floats[0];
+            int y = (int) floats[1];
+            if(type != PathIterator.SEG_CLOSE) {
+                triangoloNuovo.addPoint(x, y);
+                
+            }
+            iterator.next();
+        }
+        
+        this.triangolo.reset();
+        this.triangolo = triangoloNuovo;
+        this.forma.reset();
+        
+        repaint();
+        
+    }//GEN-LAST:event_bottoneGenera
+
         //button.setLocation(getWidth()/2-width/2, getHeight()/2-height/2); 
     private void allargaArea() {
+        this.triangolo.reset();
         this.width = this.getWidth();
         this.height = this.getHeight();
+        catetoMaggiore = height/2;
+        catetoMinore = (int)(catetoMaggiore/Math.sqrt(3));
+        ipotenusa = catetoMinore*2;
         
         int diffX = width - DIM_MIN[0];
         int diffY = height - DIM_MIN[1];
         if(width > DIM_MIN[0]){
             System.out.println("largezza");
-            System.out.println(bordoOrizzontale);
-            contenitoreTriangolo[0] = bordoOrizzontale + diffX/4;
+            bordoOrizzontale = 100 + diffX/4;
+            for(int i = 0; i < punti.size(); i++){
+                //punti.get(i).x = bordoOrizzontale + (punti.get(i).x - bordoOrizzontale) + diffX/4;
+            
+                //punti.get(i).x += bordoOrizzontale - diffX/4;
+            }
         }
         if(height > DIM_MIN[1]){
             System.out.println("altezza");
-            contenitoreTriangolo[1] = bordoVerticale + diffY/2;
+            
+            for(int i = 0; i < punti.size(); i++){
+                //punti.get(i).y = bordoVerticale + (punti.get(i).y - bordoVerticale) + diffY/2;
+            }
         }
         if(width == DIM_MIN[0] && height == DIM_MIN[1]){
             System.out.println("niente");
             bordoOrizzontale = 100;
-            bordoVerticale = 194;
-            larghezzaContenitore = 300;
-            altezzaContenitore = 400;
             
-            contenitoreTriangolo[0] = bordoOrizzontale;
-            contenitoreTriangolo[1] = bordoVerticale;
-            contenitoreTriangolo[2] = larghezzaContenitore;
-            contenitoreTriangolo[3] = altezzaContenitore;
         }
+        //this.triangolo.reset();
+        triangolo.addPoint(bordoOrizzontale, height/4);
+        triangolo.addPoint(bordoOrizzontale+catetoMinore, height/4);
+        triangolo.addPoint(bordoOrizzontale+catetoMinore, height/4 + catetoMaggiore);
+        System.out.println(catetoMaggiore);
+        
         //System.out.println(diffX + "     " + diffY);
         //bottoneIndietro.setLocation(bottoneIndietro.getLocation().x + diffX,bottoneIndietro.getLocation().y + diffY);
         repaint();
@@ -201,43 +334,49 @@ public class FlakeManagement extends JFrame{
     }*/
     
     public void paint(Graphics g){
+        Graphics2D g2 = (Graphics2D)g;
         Color sfondo = new Color(204,255,255);
         g.setColor(sfondo);
         g.fillRect(0, 0,this.getWidth() ,this.getHeight());
         //bottoneIndietro.paint(g);
         g.setColor(Color.BLACK);
         g.drawLine(this.getWidth()/2, 0, this.getWidth()/2, this.getHeight());
-        g.setColor(Color.BLUE);
-        g.fillRect(contenitoreTriangolo[0],contenitoreTriangolo[1],contenitoreTriangolo[2],contenitoreTriangolo[3]);
+        
+        g.setColor(Color.red);
+        g.fillPolygon(triangolo);
+        
+        //g.draw
+        
+        this.width = this.getWidth();
+        this.height = this.getHeight();
 //        System.out.println(contenitoreTriangolo[0] + "   " + contenitoreTriangolo[1] + "   " + contenitoreTriangolo[2] + "   " + contenitoreTriangolo[3]);
         for(int i = 0; i < punti.size();i++){
             Point p = punti.get(i);
-            x = new int[punti.size()];
-            y = new int[punti.size()];
-            x[i] = p.x;
-            y[i] = p.y;
-            forma.addPoint(p.x, p.y);
+            if(p.x <=  width/2){
+                x = new int[punti.size()];
+                y = new int[punti.size()];
+                x[i] = p.x;
+                y[i] = p.y;
+                forma.addPoint(p.x+5, p.y+5);  
+            }else{
+                removePunto(punti.get(i));
+            }
         }
         
         for(int i = 0; i < punti.size(); i++){
-            g.setColor(Color.GREEN);
-            g.fillOval(punti.get(i).x, punti.get(i).y, 10, 10);
             if(i > 1){
                 //g.drawLine(punti.get(i).x+5, punti.get(i).y+5, punti.get(i-1).x+5, punti.get(i-1).y+5);
-                g.drawPolygon(forma);
+                g.setColor(Color.DARK_GRAY);
+                g.fillPolygon(forma);
                 this.forma.reset();
-            }
+                
+            }            
+            g.setColor(Color.GREEN);
+            g.fillOval(punti.get(i).x, punti.get(i).y, 10, 10);
         }
-        //g.drawImage(buffer, 0, 0, this);
         
-        //g.fillOval(ERROR, ERROR, ERROR, ERROR);
+        //areaTriangolo.
     }
-    
-    /*public void paintComponent(Graphics g){
-        //super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        draw(g2);
-    }*/
     /**
      * @param args the command line arguments
      */
@@ -274,13 +413,10 @@ public class FlakeManagement extends JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bottoneGenera;
     private javax.swing.JButton bottoneIndietro;
+    private javax.swing.JButton bottoneReset;
+    private javax.swing.JButton bottoneSalva;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
-
-    /*private void draw(Graphics2D g2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
-
-
 }
