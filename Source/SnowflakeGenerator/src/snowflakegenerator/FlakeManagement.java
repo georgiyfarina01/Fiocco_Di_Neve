@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -25,7 +26,7 @@ import java.awt.geom.PathIterator;
  * @author Georgiy Farina
  * @versin 4.10.19
  */
-public class FlakeManagement extends JFrame{
+public class FlakeManagement extends JFrame implements MouseListener{
     
     private int width = 1024;
     
@@ -49,14 +50,18 @@ public class FlakeManagement extends JFrame{
     
     private Polygon triangolo = new Polygon();
     
+    private Polygon triangoloFinale = new Polygon();
+    
     public static final int DIM_MIN[] = {1024,768};
     
     private Area areaForma = new Area(forma);
     
     private Area areaTriangolo = new Area(triangolo);
     
-    
-    private Area areaFinale;
+    private boolean disegnaTriangoloOriginale = true;
+    private boolean disegnaTriangoloNuovo = false;
+    private boolean disegnaForma = true;
+    private boolean chiudiForma = false;
 
     /**
      * Creates new form FlakeManagement
@@ -67,29 +72,12 @@ public class FlakeManagement extends JFrame{
         this.punti = new ArrayList<>();
         
         this.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e){
-                addPunto(e.getPoint());
-                repaint();
-            }
         }); 
         
         triangolo.addPoint(bordoOrizzontale, height/4);
         triangolo.addPoint(bordoOrizzontale+catetoMinore, height/4);
         triangolo.addPoint(bordoOrizzontale+catetoMinore, height/4 + catetoMaggiore);
     }
-    
-    /*public void redraw() {
-        buffer = new BufferedImage(
-                height, // height
-                width, // width
-                BufferedImage.TYPE_4BYTE_ABGR); // ABGR = RGBA, 4-byte (r, g, b, a) per pixel
-        Graphics g = buffer.getGraphics();
-        // do your drawing here
-        //if (this.getGraphics()){
-            // 'this' is already shown, so it needs a redraw
-            this.paint(this.getGraphics()); // little hack
-        //}
-    }*/
     
     private void addPunto(Point p){
         punti.add(p);
@@ -235,7 +223,7 @@ public class FlakeManagement extends JFrame{
     }//GEN-LAST:event_bottoneSalvaComponentHidden
 
     private void bottoneSalva(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottoneSalva
-        JFileChooser fileChooser = new JFileChooser();
+        /*JFileChooser fileChooser = new JFileChooser();
         
         FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv");
         fileChooser.setFileFilter(filter);
@@ -244,7 +232,7 @@ public class FlakeManagement extends JFrame{
         if (ris == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-        }
+        }*/
     }//GEN-LAST:event_bottoneSalva
 
     private void bottoneReset1ComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_bottoneReset1ComponentHidden
@@ -252,36 +240,50 @@ public class FlakeManagement extends JFrame{
     }//GEN-LAST:event_bottoneReset1ComponentHidden
 
     private void bottoneReset1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottoneReset1
-        // TODO add your handling code here:
+        this.punti.clear();
+        for(int i = 0; i < x.length; i++){
+            this.x[i] = 0;
+        }
+        for(int j = 0; j < y.length; j++){
+            this.y[j] = 0;    
+        }
+        repaint();
     }//GEN-LAST:event_bottoneReset1
 
     private void bottoneGeneraComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_bottoneGeneraComponentHidden
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_bottoneGeneraComponentHidden
 
     private void bottoneGenera(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottoneGenera
+       
+        //this.disegnaForma = false;
+        //this.disegnaTriangoloNuovo = true;
+        //this.disegnaTriangoloOriginale = false;
         
-        this.areaTriangolo.subtract(areaForma);
+        this.areaTriangolo.intersect(this.areaForma);
         
         PathIterator iterator = areaTriangolo.getPathIterator(null);
         
-        Polygon triangoloNuovo = new Polygon();
         float[] floats = new float[6];
+        int i = 0;
         while (!iterator.isDone()) {
+            i++;
             int type = iterator.currentSegment(floats);
             int x = (int) floats[0];
             int y = (int) floats[1];
             if(type != PathIterator.SEG_CLOSE) {
-                triangoloNuovo.addPoint(x, y);
-                
+                triangoloFinale.addPoint(x, y);
+                System.out.println(i);
             }
             iterator.next();
         }
         
         this.triangolo.reset();
-        this.triangolo = triangoloNuovo;
-        this.forma.reset();
+        //this.triangolo = triangoloNuovo;
         
+        //this.forma.reset();
+        
+        System.out.println("ho generato");
         repaint();
         
     }//GEN-LAST:event_bottoneGenera
@@ -324,6 +326,8 @@ public class FlakeManagement extends JFrame{
         triangolo.addPoint(bordoOrizzontale+catetoMinore, height/4 + catetoMaggiore);
         System.out.println(catetoMaggiore);
         
+/*        this.areaTriangolo = new Area(this.triangolo);
+        this.areaForma = new Area(this.forma);*/
         //System.out.println(diffX + "     " + diffY);
         //bottoneIndietro.setLocation(bottoneIndietro.getLocation().x + diffX,bottoneIndietro.getLocation().y + diffY);
         repaint();
@@ -335,21 +339,14 @@ public class FlakeManagement extends JFrame{
     
     public void paint(Graphics g){
         Graphics2D g2 = (Graphics2D)g;
+        //colora lo sfondo
         Color sfondo = new Color(204,255,255);
         g.setColor(sfondo);
         g.fillRect(0, 0,this.getWidth() ,this.getHeight());
-        //bottoneIndietro.paint(g);
+        //disegna la riga in mezzo
         g.setColor(Color.BLACK);
         g.drawLine(this.getWidth()/2, 0, this.getWidth()/2, this.getHeight());
-        
-        g.setColor(Color.red);
-        g.fillPolygon(triangolo);
-        
-        //g.draw
-        
-        this.width = this.getWidth();
-        this.height = this.getHeight();
-//        System.out.println(contenitoreTriangolo[0] + "   " + contenitoreTriangolo[1] + "   " + contenitoreTriangolo[2] + "   " + contenitoreTriangolo[3]);
+
         for(int i = 0; i < punti.size();i++){
             Point p = punti.get(i);
             if(p.x <=  width/2){
@@ -357,25 +354,42 @@ public class FlakeManagement extends JFrame{
                 y = new int[punti.size()];
                 x[i] = p.x;
                 y[i] = p.y;
-                forma.addPoint(p.x+5, p.y+5);  
+                //forma.addPoint(p.x+5, p.y+5);  
             }else{
                 removePunto(punti.get(i));
             }
         }
         
-        for(int i = 0; i < punti.size(); i++){
-            if(i > 1){
-                //g.drawLine(punti.get(i).x+5, punti.get(i).y+5, punti.get(i-1).x+5, punti.get(i-1).y+5);
-                g.setColor(Color.DARK_GRAY);
-                g.fillPolygon(forma);
-                this.forma.reset();
-                
-            }            
-            g.setColor(Color.GREEN);
-            g.fillOval(punti.get(i).x, punti.get(i).y, 10, 10);
+        this.areaTriangolo = new Area(this.triangolo);
+        this.areaForma = new Area(this.forma);
+        
+        
+        if(this.disegnaTriangoloOriginale){
+            g.setColor(Color.red);
+            g.fillPolygon(this.triangolo);
+        }
+        if(this.disegnaForma){
+            for(int i = 0; i < punti.size(); i++){
+                if(i > 1){
+                    //g.drawLine(punti.get(i).x+5, punti.get(i).y+5, punti.get(i-1).x+5, punti.get(i-1).y+5);
+                    g.setColor(Color.DARK_GRAY);
+                    g.fillPolygon(forma);
+                    this.forma.reset();
+
+                }            
+                g.setColor(Color.GREEN);
+                g.fillOval(punti.get(i).x, punti.get(i).y, 10, 10);
+            }
+            
         }
         
-        //areaTriangolo.
+        g.setColor(Color.BLACK);
+        //g2.fill(areaTriangolo);
+        g.fillPolygon(triangoloFinale);
+        /*if(this.disegnaTriangoloNuovo){
+            g.setColor(Color.red);
+            g.fillPolygon(this.triangoloFinale);
+        }*/
     }
     /**
      * @param args the command line arguments
@@ -419,4 +433,41 @@ public class FlakeManagement extends JFrame{
     private javax.swing.JButton bottoneSalva;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mouseClicked(MouseEvent arg0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mousePressed(MouseEvent arg0) {
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e){
+        if(e.getPoint().x >= x[0] - 5 && e.getPoint().x <= x[0] + 5    &&    e.getPoint().y >= y[0] - 5 && e.getPoint().y <= y[0] + 5){
+            for(int i = 0; i < x.length; i++){
+                int x = this.x[i];
+                int y = this.y[i];
+                Point p = new Point(x,y);
+                forma.addPoint(x, y);
+                this.disegnaForma = true;
+            }
+        }else{
+            addPunto(e.getPoint());
+        }
+        
+        repaint();
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent arg0) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent arg0) {
+        
+    }
 }
