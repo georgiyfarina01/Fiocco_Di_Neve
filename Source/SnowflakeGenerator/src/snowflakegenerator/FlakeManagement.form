@@ -33,9 +33,9 @@
     <Property name="rows" type="int" value="1"/>
   </Layout>
   <SubComponents>
-    <Component class="snowflakegenerator.Triangle" name="trianglePanel">
+    <Component class="snowflakegenerator.Triangle" name="triangle2">
     </Component>
-    <Container class="snowflakegenerator.Flake" name="flake1">
+    <Container class="snowflakegenerator.Flake" name="flake2">
 
       <Layout>
         <DimensionLayout dim="0">

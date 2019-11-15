@@ -57,18 +57,12 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     private Area areaForma = new Area(forma);
     
     private Area areaTriangolo = new Area(triangolo);
-    
-    private boolean disegnaTriangoloOriginale = true;
-    private boolean disegnaTriangoloNuovo = false;
-    private boolean disegnaForma = true;
-    private boolean chiudiForma = false;
 
     /**
      * Creates new form FlakeManagement
      */
     public Triangle() {
         initComponents();
-        this.setSize(1024,768);
         this.punti = new ArrayList<>();
         
         this.addMouseListener(new MouseAdapter(){
@@ -235,11 +229,6 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     }//GEN-LAST:event_bottoneGeneraComponentHidden
 
     private void bottoneGenera(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottoneGenera
-
-        this.disegnaForma = false;
-        this.disegnaTriangoloNuovo = true;
-        this.disegnaTriangoloOriginale = false;
-
         this.areaTriangolo.intersect(this.areaForma);
 
         PathIterator iterator = areaTriangolo.getPathIterator(null);
@@ -268,7 +257,7 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
 
     }//GEN-LAST:event_bottoneGenera
 
-    private void allargaArea() {
+    public void allargaArea() {
         this.triangolo.reset();
         this.width = this.getWidth();
         this.height = this.getHeight();
@@ -339,23 +328,18 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
         this.areaForma = new Area(this.forma);
         
         
-        if(this.disegnaTriangoloOriginale){
-            g.setColor(Color.red);
-            g.fillPolygon(this.triangolo);
-        }
-        if(this.disegnaForma){
-            for(int i = 0; i < punti.size(); i++){
-                if(i > 1){
-                    //g.drawLine(punti.get(i).x+5, punti.get(i).y+5, punti.get(i-1).x+5, punti.get(i-1).y+5);
-                    g.setColor(Color.DARK_GRAY);
-                    g.fillPolygon(forma);
-                    this.forma.reset();
+        g.setColor(Color.red);
+        g.fillPolygon(this.triangolo);
+        for(int i = 0; i < punti.size(); i++){
+            if(i > 1){
+                //g.drawLine(punti.get(i).x+5, punti.get(i).y+5, punti.get(i-1).x+5, punti.get(i-1).y+5);
+                g.setColor(Color.DARK_GRAY);
+                g.fillPolygon(forma);
+                this.forma.reset();
 
-                }            
-                g.setColor(Color.GREEN);
-                g.fillOval(punti.get(i).x, punti.get(i).y, 10, 10);
-            }
-            
+            }            
+            g.setColor(Color.GREEN);
+            g.fillOval(punti.get(i).x, punti.get(i).y, 10, 10);
         }
         
         g.setColor(Color.BLACK);
@@ -367,20 +351,8 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
         }*/
     }
     
-        public void mouseClicked(MouseEvent e) {
-        if(e.getPoint().x >= x[0] - 5 && e.getPoint().x <= x[0] + 5    &&    e.getPoint().y >= y[0] - 5 && e.getPoint().y <= y[0] + 5){
-            for(int i = 0; i < x.length; i++){
-                int x = this.x[i];
-                int y = this.y[i];
-                Point p = new Point(x,y);
-                forma.addPoint(x, y);
-                this.disegnaForma = true;
-            }
-        }else{
-            addPunto(e.getPoint());
-        }
-        
-        repaint();
+    @Override
+    public void mouseClicked(MouseEvent e) {
     }
 
     @Override
@@ -390,6 +362,18 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent e){
+        if(e.getPoint().x >= x[0] - 5 && e.getPoint().x <= x[0] + 5    &&    e.getPoint().y >= y[0] - 5 && e.getPoint().y <= y[0] + 5){
+            for(int i = 0; i < x.length; i++){
+                int x = this.x[i];
+                int y = this.y[i];
+                Point p = new Point(x,y);
+                forma.addPoint(x, y);
+            }
+        }else{
+            addPunto(e.getPoint());
+        }
+        
+        repaint();
 
     }
 

@@ -27,28 +27,28 @@ public class FlakeManagement extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        trianglePanel = new snowflakegenerator.Triangle();
-        flake1 = new snowflakegenerator.Flake();
+        triangle2 = new snowflakegenerator.Triangle();
+        flake2 = new snowflakegenerator.Flake();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setName("mainFrame"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1024, 768));
         getContentPane().setLayout(new java.awt.GridLayout(1, 2));
-        getContentPane().add(trianglePanel);
+        getContentPane().add(triangle2);
 
-        javax.swing.GroupLayout flake1Layout = new javax.swing.GroupLayout(flake1);
-        flake1.setLayout(flake1Layout);
-        flake1Layout.setHorizontalGroup(
-            flake1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout flake2Layout = new javax.swing.GroupLayout(flake2);
+        flake2.setLayout(flake2Layout);
+        flake2Layout.setHorizontalGroup(
+            flake2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 512, Short.MAX_VALUE)
         );
-        flake1Layout.setVerticalGroup(
-            flake1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        flake2Layout.setVerticalGroup(
+            flake2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 768, Short.MAX_VALUE)
         );
 
-        getContentPane().add(flake1);
+        getContentPane().add(flake2);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -89,7 +89,7 @@ public class FlakeManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private snowflakegenerator.Flake flake1;
-    private snowflakegenerator.Triangle trianglePanel;
+    private snowflakegenerator.Flake flake2;
+    private snowflakegenerator.Triangle triangle2;
     // End of variables declaration//GEN-END:variables
 }
