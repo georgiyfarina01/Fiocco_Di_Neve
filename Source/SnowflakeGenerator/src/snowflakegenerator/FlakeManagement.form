@@ -33,9 +33,12 @@
     <Property name="rows" type="int" value="1"/>
   </Layout>
   <SubComponents>
-    <Component class="snowflakegenerator.Triangle" name="triangle2">
+    <Component class="snowflakegenerator.Triangle" name="trianglePanel">
+      <Events>
+        <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="trianglePanelComponentResized"/>
+      </Events>
     </Component>
-    <Container class="snowflakegenerator.Flake" name="flake2">
+    <Container class="snowflakegenerator.Flake" name="finalFlakePanel">
 
       <Layout>
         <DimensionLayout dim="0">
