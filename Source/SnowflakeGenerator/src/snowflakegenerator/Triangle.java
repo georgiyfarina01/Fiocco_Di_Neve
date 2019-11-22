@@ -6,12 +6,14 @@ import java.awt.Graphics2D;
 import java.util.List;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Path;
@@ -100,9 +102,14 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     private Polygon triangoloFinale = new Polygon();
     
     /**
+     * Poligono del triangolo ritagliato.
+     */
+    private Polygon fiocco = new Polygon();
+    
+    /**
      * Dimensioni minime del panel.
      */
-    public static final int DIM_MIN[] = {512,768};
+    public static final int DIM_MIN[] = {504,729};
     
     /**
      * Area del poligono della forma che creiamo.
@@ -152,7 +159,7 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     /**
      * Metodo utile per aggiungere i punti della forma che creiamo.
      */
-    private void addPunto(Point p){
+    private void addPoint(Point p){
         punti.add(p);
     }
     
@@ -362,17 +369,17 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     }//GEN-LAST:event_bottoneTaglia
 
     private void padreRidimensionato(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_padreRidimensionato
-        allargaArea();
+        ridimensiona();
     }//GEN-LAST:event_padreRidimensionato
 
     private void panelRidimensionato(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_panelRidimensionato
-        allargaArea();
+        ridimensiona();
     }//GEN-LAST:event_panelRidimensionato
     
     /**
      * Metodo utile per adattare la posizione del triangolo in maniera corretta.
      */
-    public void allargaArea() {
+    public void ridimensiona() {
         
         this.triangolo.reset();
         this.width = this.getWidth();
@@ -384,20 +391,10 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
         int diffX = this.width - DIM_MIN[0];
         int diffY = this.height - DIM_MIN[1];
         if(this.width > DIM_MIN[0]){
-            System.out.println("largezza cambiata");
-            this.bordoOrizzontale = 100 + diffX/2;
-            for(int i = 0; i < punti.size(); i++){
-                punti.get(i).x = bordoOrizzontale + diffX/2;
-            
-                //punti.get(i).y += this.height/4 - diffX/2;
-            }
+            this.bordoOrizzontale = 100 + diffX/2;     
         }
         if(this.height > DIM_MIN[1]){
-            System.out.println("altezza cambiata");
-            
-            for(int i = 0; i < this.punti.size(); i++){
-                //punti.get(i).y = bordoVerticale + (punti.get(i).y - bordoVerticale) + diffY/2;
-            }
+
         }
         if(this.width == DIM_MIN[0] && this.height == DIM_MIN[1]){
             System.out.println("niente");
@@ -408,25 +405,51 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
         this.triangolo.addPoint(this.bordoOrizzontale, this.height/4);
         this.triangolo.addPoint(this.bordoOrizzontale+this.catetoMinore, this.height/4);
         this.triangolo.addPoint(this.bordoOrizzontale+this.catetoMinore, this.height/4 + this.catetoMaggiore);
+       
         
         //this.areaTriangoloOriginale = new Area(this.triangolo);
         //this.areaForma = new Area(this.forma);
-        System.out.println(this.getHeight());
+//this.triangolo = (Polygon)transformed;
         //System.out.println("differenza x tra la larghezza dello schermo e 512: " + diffX + '\n' + "differenza y tra l'altezza dello schermo e 768: " + diffY);
         
         //bottoneIndietro.setLocation(bottoneIndietro.getLocation().x + diffX,bottoneIndietro.getLocation().y + diffY);
         repaint();
     }
     
+   
+
+    private void ridimensionaForma() {
+        AffineTransform tx = new AffineTransform();
+        AffineTransform ty = new AffineTransform();
+        tx.translate(((double)this.getWidth()-(double)DIM_MIN[0]) /2 ,0);
+        ty.scale((double)this.getHeight()/(double)DIM_MIN[1], (double)this.getHeight()/(double)DIM_MIN[1]);
+        tx.concatenate(ty);
+        Shape transformed = tx.createTransformedShape(this.forma);
+
+        PathIterator iterator = transformed.getPathIterator(null);
+        this.forma.reset();
+        float[] floats = new float[6];
+        while (!iterator.isDone()) {
+            int type = iterator.currentSegment(floats);
+            int x = (int) floats[0];
+            int y = (int) floats[1];
+            if(type != PathIterator.SEG_CLOSE) {
+                this.forma.addPoint(x, y);
+                //System.out.println(i);
+            }
+            iterator.next();
+        }
+        System.out.println();
+    }
+    
     private void spostaPunto(MouseEvent e) {
         Point p = e.getPoint();
-        
     }
     
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D)g.create();
         
         g.setColor(COLORE_SFONDO);
         g.fillRect(0,0,this.width, this.height);
@@ -439,6 +462,8 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
             y[i] = p.y;
             forma.addPoint(p.x+radius, p.y+radius);  
         }
+        
+        ridimensionaForma();
         
         this.areaTriangoloOriginale = new Area(this.triangolo);
         this.areaForma = new Area(this.forma);
@@ -468,15 +493,10 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
             g.setColor(Color.BLACK);
             g.fillPolygon(triangoloFinale);
         }
+        g.setColor(Color.BLUE);
+        //g.fillPolygon(fiocco);
+        //float theta = 90;
         
-        
-        
-        
-        
-        /*if(this.disegnaTriangoloNuovo){
-            g.setColor(Color.red);
-            g.fillPolygon(this.triangoloFinale);
-        }*/
     }
     
     @Override
@@ -500,7 +520,7 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
         //}else{
         */
         if(e.getButton() == MouseEvent.BUTTON1){
-            addPunto(e.getPoint());
+            addPoint(e.getPoint());
         }else if(e.getButton() == MouseEvent.BUTTON3){
             spostaPunto(e);
         }
@@ -527,4 +547,5 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     private javax.swing.JButton bottoneSalva;
     private javax.swing.JButton bottoneTaglia;
     // End of variables declaration//GEN-END:variables
+
  }
