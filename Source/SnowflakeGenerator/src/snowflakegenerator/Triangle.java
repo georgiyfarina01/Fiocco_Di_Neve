@@ -38,7 +38,7 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     /**
      * Larghezza del panel del triangolo.
      */
-    private int width = 512;
+    private int width = 504;
     
     /**
      * Altezza del panel del triangolo.
@@ -308,6 +308,7 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
         }
         this.forma.reset();
         this.triangoloFinale.reset();
+        this.fiocco.reset();
         
         this.areaForma.reset();
         this.areaTriangoloOriginale.reset();
@@ -448,6 +449,8 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     
     @Override
     public void paintComponent(Graphics g){
+        System.out.println(this.getWidth());
+        System.out.println(this.getHeight());
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g.create();
         
