@@ -283,7 +283,7 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     }//GEN-LAST:event_bottoneIndietroComponentHidden
 
     private void bottoneIndietrotornaIndietro(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottoneIndietrotornaIndietro
-        this.
+        this.setVisible(false);
         new StartMenu().setVisible(true);
     }//GEN-LAST:event_bottoneIndietrotornaIndietro
 
