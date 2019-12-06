@@ -55,40 +55,11 @@
 
 ### Abstract
 
-  Questo lavoro è stato assegnato con le stesse specifiche a 2 classi di informatica del terzo anno. Vi è stata possibilità di scegliere se sviluppare il software con l'ulitizzo o di Javascript, creando per questo un sito apposito interamente dedicato, o di Java dove si doveva sviluppare un software scaricabile da un piccolo sito. Con l'utilizzo di questo strumento ora è possibile creare dei fiocchi in poco tempo semplicemente ritagliando un triangolo avendo così modo di scatenare all'infinito la propria fantasia facendo e rifacendo quanti fiocchi si vuole senza doverli buttare nel cestino nel caso non dovessero piacere. Esistono diverse varianti di questo software, ma la mia versione permetterà di eseguire funzioni quali (CONTINUARE!!!!!!!!!!!!!!!)
-
-  -   **Background/Situazione iniziale**
-
-  -   **Descrizione del problema e motivazione**: Che problema ho cercato
-      di risolvere? Questa sezione dovrebbe includere l'importanza del
-      vostro lavoro, la difficoltà dell'area e l'effetto che potrebbe
-      avere se portato a termine con successo.
-
-  -   **Approccio/Metodi**: Come ho ottenuto dei progressi? Come ho
-      risolto il problema (tecniche…)? Quale è stata l’entità del mio
-      lavoro? Che fattori importanti controllo, ignoro o misuro?
-
-  -   **Risultati**: Quale è la risposta? Quali sono i risultati? Quanto è
-      più veloce, più sicuro, più economico o in qualche altro aspetto
-      migliore di altri prodotti/soluzioni?
-
-  Esempio di abstract:
-
-  > *As the size and complexity of today’s most modern computer chips
-  > increase, new techniques must be developed to effectively design and
-  > create Very Large Scale Integration chips quickly. For this project, a
-  > new type of hardware compiler is created. This hardware compiler will
-  > read a C++ program, and physically design a suitable microprocessor
-  > intended for running that specific program. With this new and powerful
-  > compiler, it is possible to design anything from a small adder, to a
-  > microprocessor with millions of transistors. Designing new computer
-  > chips, such as the Pentium 4, can require dozens of engineers and
-  > months of time. With the help of this compiler, a single person could
-  > design such a large-scale microprocessor in just weeks.*
+  Questo lavoro è stato assegnato con le stesse specifiche a 2 classi di informatica del terzo anno. Vi è stata possibilità di scegliere se sviluppare il software con l'ulitizzo o di Javascript, creando per questo un sito apposito interamente dedicato allo scopo, o di Java dove si doveva sviluppare un software scaricabile da un piccolo sito. Con l'utilizzo di questo strumento ora è possibile creare dei fiocchi in poco tempo semplicemente ritagliando un triangolo avendo così modo di scatenare all'infinito la propria fantasia facendo e rifacendo quanti fiocchi si vuole senza doverli buttare nel cestino nel caso non dovessero piacere.
 
 ### Scopo
 
-  Lo scopo del progetto è quello di generare un fiocco di neve utilizzando gli scarti di un triangolo precedentemente ritagliato dall'utente e infine salvare il risultato come un immagine raster o vettoriale
+  Lo scopo del progetto è quello di generare un fiocco di neve utilizzando gli scarti di un triangolo precedentemente ritagliato dall'utente e infine salvare il risultato come un immagine raster o vettoriale con le dimensioni desiderate dall'utente.
 
 ## Analisi
 
@@ -96,64 +67,7 @@
 
   Di solito siamo abituati a creare dei fiocchi di neve partendo da un foglio di carta, delle forbici e un po di fantasia mista a creatività. Utilizzando questo software sviluppato interamente in Java versione 12.0.1 avrete la possibilità di fare tutto ciò con un paio di click sul computer.
 
-  -   Background/Situazione iniziale
-
-  -   Quale è e come è organizzato il contesto in cui il prodotto dovrà
-      funzionare?
-
-  -   Come viene risolto attualmente il problema? Esiste già un prodotto
-      simile?
-
-  -   Chi sono gli utenti? Che bisogni hanno? Come e dove lavorano?
-
-  -   Che competenze/conoscenze/cultura posseggono gli utenti in relazione
-      con il problema?
-
-  -   Esistono convenzioni/standard applicati nel dominio?
-
-  -   Che conoscenze teoriche bisogna avere/acquisire per poter operare
-      efficacemente nel dominio?
-
-  -   …
-
 ### Analisi e specifica dei requisiti
-
-  Il progettista, dopo aver ricevuto il mandato, in collaborazione con il
-  committente redige una lista di requisiti. Durante questi incontri,
-  tramite interviste (da inserire nei diari), il progettista deve cercare
-  di rispondere alle seguenti domande:
-
-  -   Quali sono i bisogni del committente?
-
-  -   Quali funzioni deve svolgere il prodotto?
-
-  -   Come devono essere implementate?
-
-  -   L’utente, come vorrebbe/dovrebbe interagire con il prodotto?
-
-  -   Come verrà utilizzato il prodotto?
-
-  -   Che tipo di interfaccia si immagina?
-
-  -   Che prestazioni minime deve fornire il prodotto?
-
-  -   Che grado di sicurezza deve avere il prodotto?
-
-  -   …
-
-  In base alla lista dei requisiti e all’analisi degli stessi, il
-  progettista redige una *specifica dei requisiti* in cui elenca e
-  descrive in modo dettagliato quali sono le funzionalità che il prodotto
-  fornirà. La specifica dovrebbe essere abbastanza dettagliata da poter
-  essere utilizzata come base per lo sviluppo, ma non troppo; ad esempio
-  non dovrebbe contenere dettagli di implementazione, o definizioni
-  dettagliate dell’interfaccia grafica a meno che questi non siano
-  considerati cruciali. Non si deve scordare che i requisiti non
-  rappresentano delle attività bensì delle caratteristiche che il prodotto
-  dovrà possedere.
-
-
-
 
   |**ID**	|**Nome**|**Categoria**| **Priorità**|**Vers**|**Note**  |
   |----|------------|-------|--------|----|------|
@@ -173,38 +87,9 @@
   |14|Finestra ridimensionabile con dimensioni default 1024x768|Interfaccia programma|1|1.0|...|
 
 
-
-
-
-
-**Spiegazione elementi tabella dei requisiti:**
-
-**ID**: identificativo univoco del requisito
-
-**Nome**: breve descrizione del requisito
-
-**Priorità**: indica l’importanza di un requisito nell’insieme del
-progetto, definita assieme al committente. Ad esempio poter disporre di
-report con colonne di colori diversi ha priorità minore rispetto al
-fatto di avere un database con gli elementi al suo interno. Solitamente
-si definiscono al massimo di 2-3 livelli di priorità.
-
-**Versione**: indica la versione del requisito. Ogni modifica del
-requisito avrà una versione aggiornata.
-
-Sulla documentazione apparirà solamente l’ultima versione, mentre le
-vecchie dovranno essere inserite nei diari.
-
-**Note**: eventuali osservazioni importanti o riferimenti ad altri
-requisiti.
-
-**Sotto requisiti**: elementi che compongono il requisito.
-
-
 ### Use case
 
-I casi d’uso rappresentano l’interazione tra i vari attori e le
-funzionalità del prodotto.
+VEDERE L'ESEMPIO DI BASKET 
 
 ### Pianificazione
 
@@ -213,24 +98,15 @@ funzionalità del prodotto.
      style="float: left; margin-right: 10px;" />
 
 ### Analisi dei mezzi
+ #### Software
+ 
 
-Elencare e *descrivere* i mezzi disponibili per la realizzazione del
-progetto. Ricordarsi di sempre descrivere nel dettaglio le versioni e il
-modello di riferimento.
-
-SDK, librerie, tools utilizzati per la realizzazione del progetto e
-eventuali dipendenze.
-
-Su quale piattaforma dovrà essere eseguito il prodotto? Che hardware
-particolare è coinvolto nel progetto? Che particolarità e limitazioni
-presenta? Che hw sarà disponibile durante lo sviluppo?
+ #### Hardware
+ Il progetto è stato realizzato interamente su un computer portatile Acer A717-71G con sistema operativo Windows 10 Home. Il link del sito dove risiede il download del file è il seguente: samtinfo.ch/i17fargeo/Snowflake
 
 ## Progettazione
 
-Questo capitolo descrive esaustivamente come deve essere realizzato il
-prodotto fin nei suoi dettagli. Una buona progettazione permette
-all’esecutore di evitare fraintendimenti e imprecisioni
-nell’implementazione del prodotto.
+mettere tutti i metodi e cose i test case
 
 ### Design dell’architettura del sistema
 
@@ -345,17 +221,8 @@ consuntivo).
 
 ## Conclusioni
 
-Quali sono le implicazioni della mia soluzione? Che impatto avrà?
-Cambierà il mondo? È un successo importante? È solo un’aggiunta
-marginale o è semplicemente servita per scoprire che questo percorso è
-stato una perdita di tempo? I risultati ottenuti sono generali,
-facilmente generalizzabili o sono specifici di un caso particolare? ecc
-
-### Sviluppi futuri
-  Migliorie o estensioni che possono essere sviluppate sul prodotto.
-
-### Considerazioni personali
-  Cosa ho imparato in questo progetto? ecc
+L'applicativo sviluppato facilita il compito della generazione di un fiocco, fatta precedentemente a mano. DOpo aver svolto il progetto mi sono accorto di quanta importanza si debba dare a certi particolari quali prevedere eventuali perdite di tempo, impegnarsi tanto nel tempo dedicato e non sottovalutare gli aspetti di implementazione che talvolta possono sembrare più facili.
+Per quanto riguarda le disponibilità dell'utente nell'utilizzo, sicuramente si potrebbe fare di più, migliorare qualche dettaglio tralasciato per mancanza di tempo.
 
 ## Bibliografia
 
