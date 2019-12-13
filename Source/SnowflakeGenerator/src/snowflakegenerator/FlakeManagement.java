@@ -27,41 +27,16 @@ public class FlakeManagement extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        trianglePanel = new snowflakegenerator.Triangle();
-        finalFlakePanel = new snowflakegenerator.Flake();
+        triangle1 = new snowflakegenerator.Triangle();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setName("mainFrame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1024, 768));
         getContentPane().setLayout(new java.awt.GridLayout(1, 2));
-
-        trianglePanel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                trianglePanelComponentResized(evt);
-            }
-        });
-        getContentPane().add(trianglePanel);
-
-        javax.swing.GroupLayout finalFlakePanelLayout = new javax.swing.GroupLayout(finalFlakePanel);
-        finalFlakePanel.setLayout(finalFlakePanelLayout);
-        finalFlakePanelLayout.setHorizontalGroup(
-            finalFlakePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 512, Short.MAX_VALUE)
-        );
-        finalFlakePanelLayout.setVerticalGroup(
-            finalFlakePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 768, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(finalFlakePanel);
+        getContentPane().add(triangle1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void trianglePanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_trianglePanelComponentResized
-
-    }//GEN-LAST:event_trianglePanelComponentResized
 
     /**
      * @param args the command line arguments
@@ -99,7 +74,6 @@ public class FlakeManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private snowflakegenerator.Flake finalFlakePanel;
-    private snowflakegenerator.Triangle trianglePanel;
+    private snowflakegenerator.Triangle triangle1;
     // End of variables declaration//GEN-END:variables
 }

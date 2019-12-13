@@ -31,9 +31,31 @@ import java.awt.geom.PathIterator;
 public class Triangle extends javax.swing.JPanel implements MouseListener{
     
     /**
-     * Il colore dello sfondo.
+     * Il colore dello sfondo del programma.
      */
-    private static final Color COLORE_SFONDO = new Color(204,255,255);
+    private Color coloreSfondo = new Color(204,255,255);
+    
+    /**
+     * Il colore del triangolo non ritagliato.
+     */
+    private Color coloreTriangoloOriginale = new Color(255,0,0);
+    
+    /**
+     * Il colore dei punti.
+     */
+    private Color colorePunti = Color.magenta;   
+    
+    /**
+     * Il colore della forma di ritaglio.
+     */
+    private Color coloreForma = Color.gray;
+
+
+    /**
+     * Il colore della forma di ritaglio.
+     */
+    private int raggio = 5;
+
     
     /**
      * Larghezza del panel del triangolo.
@@ -55,11 +77,6 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
      * punti del cateto minore del triangolo.
      */
     private int bordoOrizzontale = 100;
-    
-    /**
-     * Raggio del punto.
-     */
-    private int radius = 5;
     
     /**
      * Lunghezza del cateto maggiore del triangolo.
@@ -85,6 +102,10 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
      * Coordinate y della forma che creiamo.
      */
     private int y[];
+    
+    private int centroFiocco;
+    
+
     
     /**
      * Poligono della forma che creiamo.
@@ -126,6 +147,8 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
      */
     private Area areaTriangoloRitagliato = new Area(this.triangoloFinale);
     
+    private ArrayList<Shape> fioccoFinale = new ArrayList<>();
+    
     /**
      * Mi dice se devo mostrare sullo schermo il triangolo originale.
      */
@@ -154,6 +177,8 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
         triangolo.addPoint(this.bordoOrizzontale, this.height/4);
         triangolo.addPoint(this.bordoOrizzontale+this.catetoMinore, this.height/4);
         triangolo.addPoint(this.bordoOrizzontale+this.catetoMinore, this.height/4 + this.catetoMaggiore);
+        
+        centroFiocco = triangolo.xpoints[2];
     }
     
     /**
@@ -168,6 +193,20 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
      */
     private void removePunto(Point p){
         punti.remove(p);
+    }
+    
+    /**
+     * Metodo utile per aggiungere i punti della forma che creiamo.
+     */
+    private void addShape(Shape s){
+        fioccoFinale.add(s);
+    }
+    
+    /**
+     * Metodo utile per togliere i punti della forma che creiamo.
+     */
+    private void removeShape(Shape s){
+        fioccoFinale.remove(s);
     }
 
     /**
@@ -364,8 +403,9 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
 
             this.disegnaForma = false;
             this.disegnaTriangoloOriginale = false;
+            this.areaTriangoloRitagliato = this.areaTriangoloOriginale;
             System.out.println("ho generato");
-            repaint();   
+            repaint();
         }
     }//GEN-LAST:event_bottoneTaglia
 
@@ -383,14 +423,15 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     public void ridimensiona() {
         
         this.triangolo.reset();
-        this.width = this.getWidth();
+        this.width = this.getWidth()/2;
         this.height = this.getHeight();
+        System.out.println(this.width);
+        System.out.println(this.height);
         this.catetoMaggiore = this.height/2;
         this.catetoMinore = (int)(this.catetoMaggiore/Math.sqrt(3));
         this.ipotenusa = this.catetoMinore*2;
         
         int diffX = this.width - DIM_MIN[0];
-        int diffY = this.height - DIM_MIN[1];
         if(this.width > DIM_MIN[0]){
             this.bordoOrizzontale = 100 + diffX/2;     
         }
@@ -406,26 +447,76 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
         this.triangolo.addPoint(this.bordoOrizzontale, this.height/4);
         this.triangolo.addPoint(this.bordoOrizzontale+this.catetoMinore, this.height/4);
         this.triangolo.addPoint(this.bordoOrizzontale+this.catetoMinore, this.height/4 + this.catetoMaggiore);
-       
+        centroFiocco = triangolo.xpoints[2];
         
-        //this.areaTriangoloOriginale = new Area(this.triangolo);
-        //this.areaForma = new Area(this.forma);
-//this.triangolo = (Polygon)transformed;
-        //System.out.println("differenza x tra la larghezza dello schermo e 512: " + diffX + '\n' + "differenza y tra l'altezza dello schermo e 768: " + diffY);
         
-        //bottoneIndietro.setLocation(bottoneIndietro.getLocation().x + diffX,bottoneIndietro.getLocation().y + diffY);
+        /*this.triangoloFinale.addPoint(this.bordoOrizzontale, this.height/4);
+        this.triangoloFinale.addPoint(this.bordoOrizzontale+this.catetoMinore, this.height/4);
+        this.triangoloFinale.addPoint(this.bordoOrizzontale+this.catetoMinore, this.height/4 + this.catetoMaggiore);*/
+        
+        
         repaint();
     }
     
-   
+    public Shape specchiaTriangolo(Area a) {
+        AffineTransform ty2 = new AffineTransform();
+        ty2.scale(-1, 1);
+        AffineTransform ty3 = new AffineTransform();
+        ty3.translate(-centroFiocco*2, 0);
+        AffineTransform ty1 = new AffineTransform();
+        ty1.concatenate(ty2);
+        ty1.concatenate(ty3);
+        return ty1.createTransformedShape(a);
+    }
+    
+    public Shape ruotaTriangolo(Shape fiocco, double angolo) {
+        AffineTransform tf = new AffineTransform();
+        tf.rotate(Math.toRadians(angolo), triangolo.xpoints[2], triangolo.ypoints[2]);
+        return tf.createTransformedShape(fiocco);
+    }
+    
+    public List<Shape> generaFiocco() {
+        fioccoFinale.clear();
+        Area prova = areaTriangoloRitagliato;
+        for (int i = 0; i < 36; i += 6) {
+            Shape flip = specchiaTriangolo(prova);
+            addShape(ruotaTriangolo(flip, i * 10));
+            addShape(ruotaTriangolo(areaTriangoloRitagliato, i * 10));
+        }
+        return fioccoFinale;
+    }
+    
+    public List<Shape> rimpicciolisciFiocco(){
+        List<Shape> fioccoNuovo = new ArrayList<>();
+        for (Shape shape : fioccoFinale) {
+           AffineTransform tf = new AffineTransform();
+           tf.scale(0.5, 0.5);
+           fioccoNuovo.add(tf.createTransformedShape(shape));
+        }
+        return fioccoNuovo;
+    }
+    
+    public List<Shape> spostaFiocco(){
+        int xIniziale = width;
+        List<Shape> fioccoNuovo = new ArrayList<>();
+        for (Shape shape : rimpicciolisciFiocco()) {
+           AffineTransform tf = new AffineTransform();
+           tf.translate(600,100);
+           fioccoNuovo.add(tf.createTransformedShape(shape));
+        }
+        return fioccoNuovo;
+    }
+    
 
     private void ridimensionaForma() {
         AffineTransform tx = new AffineTransform();
         AffineTransform ty = new AffineTransform();
-        tx.translate(((double)this.getWidth()-(double)DIM_MIN[0]) /2 ,0);
+        AffineTransform tf = new AffineTransform();
+        tx.translate(((double)this.width-(double)DIM_MIN[0]) /2 ,0);
         ty.scale((double)this.getHeight()/(double)DIM_MIN[1], (double)this.getHeight()/(double)DIM_MIN[1]);
-        tx.concatenate(ty);
-        Shape transformed = tx.createTransformedShape(this.forma);
+        tf.concatenate(tx);
+        tf.concatenate(ty);
+        Shape transformed = tf.createTransformedShape(this.forma);
 
         PathIterator iterator = transformed.getPathIterator(null);
         this.forma.reset();
@@ -440,7 +531,35 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
             }
             iterator.next();
         }
+        
+        
         System.out.println();
+    }
+    
+    private Shape ridimensionaTriangoloRitagliato() {
+        AffineTransform tx = new AffineTransform();
+        AffineTransform ty = new AffineTransform();
+        AffineTransform tf = new AffineTransform();
+        tx.translate(((double)this.width-(double)DIM_MIN[0]) /2 ,0);
+        ty.scale((double)this.getHeight()/(double)DIM_MIN[1], (double)this.getHeight()/(double)DIM_MIN[1]);
+        tf.concatenate(tx);
+        tf.concatenate(ty);
+        Shape transformed = tf.createTransformedShape(areaTriangoloRitagliato);
+        return transformed;
+
+        /*PathIterator iterator = transformed.getPathIterator(null);
+        this.forma.reset();
+        float[] floats = new float[6];
+        while (!iterator.isDone()) {
+            int type = iterator.currentSegment(floats);
+            int x = (int) floats[0];
+            int y = (int) floats[1];
+            if(type != PathIterator.SEG_CLOSE) {
+                this.forma.addPoint(x, y);
+                //System.out.println(i);
+            }
+            iterator.next();
+        }*/
     }
     
     private void spostaPunto(MouseEvent e) {
@@ -449,12 +568,10 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     
     @Override
     public void paintComponent(Graphics g){
-        System.out.println(this.getWidth());
-        System.out.println(this.getHeight());
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g.create();
         
-        g.setColor(COLORE_SFONDO);
+        g.setColor(coloreSfondo);
         g.fillRect(0,0,this.width, this.height);
 
         for(int i = 0; i < punti.size();i++){
@@ -463,40 +580,62 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
             y = new int[punti.size()];
             x[i] = p.x;
             y[i] = p.y;
-            forma.addPoint(p.x+radius, p.y+radius);  
+            forma.addPoint(p.x+raggio, p.y+raggio);  
         }
-        
-        ridimensionaForma();
         
         this.areaTriangoloOriginale = new Area(this.triangolo);
         this.areaForma = new Area(this.forma);
         
         
         if(this.disegnaTriangoloOriginale){
-            g.setColor(Color.red);
+            g.setColor(coloreTriangoloOriginale);
             g.fillPolygon(this.triangolo);
         }
         
         
         if(this.disegnaForma){
+            ridimensionaForma();
             for(int i = 0; i < punti.size(); i++){
                 if(i > 1){
                     //g.drawLine(punti.get(i).x+5, punti.get(i).y+5, punti.get(i-1).x+5, punti.get(i-1).y+5);
-                    g.setColor(Color.DARK_GRAY);
+                    g.setColor(coloreForma);
                     g.fillPolygon(forma);
                     this.forma.reset();
 
                 }            
-                g.setColor(Color.GREEN);
-                g.fillOval(punti.get(i).x, punti.get(i).y, 10, 10);
+                g.setColor(colorePunti);
+                g.fillOval(punti.get(i).x, punti.get(i).y, raggio*2, raggio*2);
             }
         }
-        
+        //ridimensionaTriangoloRitagliato();
         if(this.disegnaTriangoloFinito){
-            g.setColor(Color.BLACK);
-            g.fillPolygon(triangoloFinale);
+            //g.setColor(Color.BLACK);
+            //g.fillPolygon(triangoloFinale);
+            g2.setColor(Color.GREEN);
+            g2.fill(areaTriangoloRitagliato);
+            ridimensionaTriangoloRitagliato();
+            //g2.setColor(Color.blue);
+            generaFiocco();
+            //if(fioccoFinale.size() > 2){
+                boolean co = true;
+                for (Shape shape : spostaFiocco()) {
+                    if(co){
+                        g2.setColor(Color.BLACK);
+                    }else{
+                        g2.setColor(Color.blue);
+                    }
+                    co = !co;
+                    g2.fill(shape);
+                }
+            //}
+            
+            /*Shape prova;
+            prova = flipArea(areaTriangoloRitagliato);
+            g2.setColor(Color.blue);
+            g2.fill(prova);*/
         }
-        g.setColor(Color.BLUE);
+        
+        //g.setColor(Color.BLUE);
         //g.fillPolygon(fiocco);
         //float theta = 90;
         
@@ -507,25 +646,15 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     }
 
     @Override
-    public void mousePressed(MouseEvent arg0) {
+    public void mousePressed(MouseEvent e) {
         
     }
 
     @Override
     public void mouseReleased(MouseEvent e){
-        //if(e.getPoint().x >= x[0] - 5 && e.getPoint().x <= x[0] + 5    &&    e.getPoint().y >= y[0] - 5 && e.getPoint().y <= y[0] + 5){
-        /*    for(int i = 0; i < x.length; i++){
-                int x = this.x[i];
-                int y = this.y[i];
-                Point p = new Point(x,y);
-                forma.addPoint(x, y);
-            }
-        //}else{
-        */
+        
         if(e.getButton() == MouseEvent.BUTTON1){
             addPoint(e.getPoint());
-        }else if(e.getButton() == MouseEvent.BUTTON3){
-            spostaPunto(e);
         }
         //}
         System.out.println("dentro " + e.getPoint());
@@ -535,12 +664,12 @@ public class Triangle extends javax.swing.JPanel implements MouseListener{
     }
 
     @Override
-    public void mouseEntered(MouseEvent arg0) {
+    public void mouseEntered(MouseEvent e) {
         
     }
 
     @Override
-    public void mouseExited(MouseEvent arg0) {
+    public void mouseExited(MouseEvent e) {
         
     }
 
