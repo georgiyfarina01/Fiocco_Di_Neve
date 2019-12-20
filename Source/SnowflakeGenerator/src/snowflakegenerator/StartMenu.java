@@ -1,13 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package snowflakegenerator;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -17,6 +21,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class StartMenu extends javax.swing.JFrame {
 
+    private String percorso = "";
     /**
      * Creates new form StartMenu
      */
@@ -41,13 +46,15 @@ public class StartMenu extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 204, 204));
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setName("StartMenu"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(512, 384));
+        setPreferredSize(new java.awt.Dimension(1024, 768));
+        setResizable(false);
 
         titolo.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
         titolo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titolo.setText("Snowflake Generator");
 
-        bottoneApri.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        bottoneApri.setBackground(new java.awt.Color(0, 255, 255));
+        bottoneApri.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         bottoneApri.setLabel("Apri");
         bottoneApri.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,7 +62,8 @@ public class StartMenu extends javax.swing.JFrame {
             }
         });
 
-        bottoneCrea.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        bottoneCrea.setBackground(new java.awt.Color(0, 255, 255));
+        bottoneCrea.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         bottoneCrea.setLabel("Crea");
         bottoneCrea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,16 +114,45 @@ public class StartMenu extends javax.swing.JFrame {
         if (ris == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            this.percorso = selectedFile.getAbsolutePath();
+            
+            try{
+                ArrayList<Point> punti = loadCSV(this.percorso);
+                this.setVisible(false);
+                new FlakeManagement(punti).setVisible(true);
+            }catch (IOException ex) {
+                Logger.getLogger(StartMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
-        
     }//GEN-LAST:event_apriProgetto
 
     private void creaProgetto(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creaProgetto
         // TODO add your handling code here:
         this.setVisible(false);
         new FlakeManagement().setVisible(true);
+        
+        
     }//GEN-LAST:event_creaProgetto
 
+    public ArrayList<Point> loadCSV(String path) throws IOException {
+        ArrayList<Point> punti = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(this.percorso));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                int x = Integer.parseInt(line.split(",")[0]);
+                int y =Integer.parseInt(line.split(",")[1]);
+                punti.add(new Point(x,y));
+            }
+            
+            
+        } catch (FileNotFoundException e) {
+            System.out.println("Errore: file non trovato");
+        }
+        return punti;
+    }
+        
     /**
      * @param args the command line arguments
      */
@@ -156,4 +193,5 @@ public class StartMenu extends javax.swing.JFrame {
     private javax.swing.JButton bottoneCrea;
     private javax.swing.JLabel titolo;
     // End of variables declaration//GEN-END:variables
+
 }

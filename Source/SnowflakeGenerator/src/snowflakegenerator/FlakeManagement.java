@@ -5,6 +5,10 @@
  */
 package snowflakegenerator;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Giorgio
@@ -17,6 +21,15 @@ public class FlakeManagement extends javax.swing.JFrame {
     public FlakeManagement() {
         initComponents();
     }
+    
+    /**
+     * Creates new form FlakeManagement
+     * @param punti indica i punti letti dal csv.
+     */
+    public FlakeManagement(ArrayList<Point> punti) {
+        initComponents();
+        flakePanel.loadPunti(punti);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,13 +40,17 @@ public class FlakeManagement extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        triangle1 = new snowflakegenerator.Triangle();
+        flakePanel = new snowflakegenerator.FlakePanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 768));
         setName("mainFrame"); // NOI18N
+        setResizable(false);
         getContentPane().setLayout(new java.awt.GridLayout(1, 2));
-        getContentPane().add(triangle1);
+
+        flakePanel.setMinimumSize(new java.awt.Dimension(1024, 768));
+        flakePanel.setPreferredSize(new java.awt.Dimension(1024, 768));
+        getContentPane().add(flakePanel);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -74,6 +91,6 @@ public class FlakeManagement extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private snowflakegenerator.Triangle triangle1;
+    private snowflakegenerator.FlakePanel flakePanel;
     // End of variables declaration//GEN-END:variables
 }
