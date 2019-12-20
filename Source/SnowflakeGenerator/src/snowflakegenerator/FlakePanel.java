@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.awt.event.ActionListener;
+import java.nio.file.Path;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -188,7 +189,6 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
         initComponents();
         this.punti = new ArrayList<>();
         this.puntiDaSalvare = new ArrayList<>();
-        System.out.println(percorsoSalvataggioPunti);
         
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
@@ -503,8 +503,10 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int ris = fileChooser.showOpenDialog(this);
         if (ris == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            String s = fileChooser.getSelectedFile().toString() + ".csv";
+            Path filePath = Paths.get(s);
+            File selectedFile = filePath.toFile();
+            System.out.println("Selected file: " + s + ".csv");
             this.percorsoSalvataggioPunti = selectedFile.getAbsolutePath();
             try (PrintWriter writer = new PrintWriter(new File(percorsoSalvataggioPunti))) {
                 StringBuilder sb = new StringBuilder();
