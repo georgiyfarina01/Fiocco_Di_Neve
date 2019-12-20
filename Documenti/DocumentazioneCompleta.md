@@ -93,9 +93,8 @@ VEDERE L'ESEMPIO DI BASKET
 
 ### Pianificazione
 
-<img src="Gantt_Iniziale.png"
-     alt="Markdown Monster icon"
-     style="float: left; margin-right: 10px;" />
+<img src="img/Gantt_Iniziale.png"
+     alt="Markdown Monster icon"/>
 
 ### Analisi dei mezzi
  #### Software
@@ -106,86 +105,129 @@ VEDERE L'ESEMPIO DI BASKET
 
 ## Progettazione
 
-mettere tutti i metodi e cose i test case
+### 3.1 Menu iniziale
 
-### Design dell’architettura del sistema
+#### 3.1.1 Introduzione
+Questa classe ha lo scopo di mostrare la schermata iniziale, dove vi è la possibilità di aprire un fiocco esistente o di crearne uno nuovo
 
-Descrive:
+#### 3.1.2 Progettazione - Diagramma UML
+<img src="UML_StartMenu.png"
+     alt="Markdown Monster icon"/>
 
--   La struttura del programma/sistema lo schema di rete...
+     
 
--   Gli oggetti/moduli/componenti che lo compongono.
+#### 3.1.3 Spiegazione UML
+- percorso: percorso completo del file che si vuole aprire (già esistente)
+- bottoneApri: bottone che si occupa di aprire un file già esistente
+- bottoneCrea: bottone che si occupa di creare un fiocco nuovo.
+- titolo: nome del programma
+- StartMenu(): costruisce la finestra da far partire
+- apriProgetto(ActionEvent evt): apre un file csv contenente le coordinate.
+- creaProgetto(ActionEvent evt): apre un'altra finestra dove l'utente creerà il fiocco.
+- loadCSV(String path): carica i punti dal csv definito dal suo percorso 'path'
+- main(String args): fa partire il programma
 
--   I flussi di informazione in ingresso ed in uscita e le
-    relative elaborazioni. Può utilizzare *diagrammi di flusso dei
-    dati* (DFD).
+### 3.2 Contenitore per la creazione del fiocco
 
--   Eventuale sitemap
+#### 3.2.1 Introduzione
+Questa classe mostra la creazione del fiocco gestita da un altra classe.
 
-### Design dei dati e database
+#### 3.2.2 Progettazione - Diagramma UML
+<img src="img/UML_FlakeManagement.png"
+     alt="Markdown Monster icon"/>
+     
 
-Descrizione delle strutture di dati utilizzate dal programma in base
-agli attributi e le relazioni degli oggetti in uso.
+#### 3.2.3 Spiegazione UML
+- flakePanel: pannello che gestisce la creazione del fiocco.
+- FlakeManagement(): costruisce la finestra con tutto di default.
+- FlakeManagement(ArrayList<"Point"> punti): costruisce la finestra caricando i punti di un fiocco salvato. 
+- main(String args): fa partire il programma.
 
-### Schema E-R, schema logico e descrizione.
+### 3.3 Gestione e creazione del fiocco.
 
-Se il diagramma E-R viene modificato, sulla doc dovrà apparire l’ultima
-versione, mentre le vecchie saranno sui diari.
+#### 3.3.1 Introduzione
+Questa classe si occupa della creazione e generazione del fiocco.
 
-### Design delle interfacce
+#### 3.3.2 Progettazione - Diagramma UML
+<img src="img/UML_FlakePanel1.png"
+     alt="Markdown Monster icon"
+     />
+  <img src="img/UML_FlakePanel2.png"
+     alt="Markdown Monster icon"
+     />
+  <img src="img/UML_FlakePanel3.png"
+     alt="Markdown Monster icon"
+     />
 
-Descrizione delle interfacce interne ed esterne del sistema e
-dell’interfaccia utente. La progettazione delle interfacce è basata
-sulle informazioni ricavate durante la fase di analisi e realizzata
-tramite mockups.
+  #### 3.2.3 Spiegazione UML
+- coloreSfondoSinistro: colore di sfondo della parte sinistra della finestra
+- coloreSfondoDestro: colore di sfondo della parte destra della finestra
+- coloreTriangoloOriginale: colore di sfondo del triangolo non modificato.
+- colorePunti: colore di sfondo dei punti di ritaglio.
+- coloreForma: colore di sfondo della forma di ritaglio. 
+- raggio: lunghezza del raggio dei punti di ritaglio.
+- panelCenter: la coordinata x a metà del panel.
+- height: altezza del panel
+- coloreForma: colore di sfondo della forma di ritaglio.  
+- punti: i punti della forma di ritaglio. 
+- puntiDaSalvare: la variabile che utilizzo per salvare i punti.
+- bordoOrizzontale: il bordo tra l'estremo sinistro della finestra e il primo vertice del triangolo.
+- catetoMaggiore: lunghezza del cateto maggiore del triangolo.
+- catetoMinore: lunghezza del cateto minore del triangolo.
+- ipotenusa: lunghezza dell'ipotenusa.
+- centroFiocco: coordinata x del vertice più in basso del triangolo, che in futuro sarà il centro del fiocco.
+- forma: forma di ritaglio.
+- triangolo: triangolo di default.
+- triangoloFinale: triangolo ritagliato
+- areaForma: area della forma di ritaglio.
+- areaTriangoloOriginale: area del triangolo di default.
+- areaTriangoloRitagliato: area del triangolo ritagliato.
+- fioccoFinale: fiocco composto da 12 triangoli.
+- disegnaTriangoloOriginale: flag che stabilisce se devo mostrare a schermo il triangolo originale.
+- disegnaTriangoloFinito: flag che stabilisce se devo mostrare a schermo il triangolo ritagliato.
+- disegnaForma: flag che stabilisce se devo mostrare a schermo la forma di ritaglio.
+- disegnaFiocco: flag che stabilisce se devo mostrare a schermo il fiocco.
+- fileCaricato: flag che stabilisce se sono stati importati dei punti da altrove.
+- percorsoSalvataggioPunti: percorso completo di dove si deve salvare i punti di ritaglio.
+- generazioneLive: flag che stabilisce se la generazione dev'essere eseguita in live o meno.
+- bottoneGenera: bottone utile per generare il fiocco.
+- bottoneIndietro: bottone utile per tornare alla schermata iniziale
+- bottoneLive: bottone utile per attivare la generazione in live.
+- bottonePNG: bottone utile per generare il PNG del fiocco (non implementato).
+- bottoneReset: bottone utile resettare tutto
+- bottoneSalva: bottone utile per salvare i punti in un nuovo file.
+- bottoneTaglia: bottone utile tagliare il triangolo con la forma.
+- FlakePanel(): costruisce la schermata
+- addPoint(Point p): aggiunge alla lista di punti il punto p
+- removeLastPoint(): toglie dalla lista di punti l'ultimo.
+- addShape(Shape s): aggiunge al fiocco la shape s.
+- loadPunti(ArrayList<"Point"> punti): carica i punti di ritaglio passati da altrove.
+- salvaSuNuovoFile(): chiede un nuovo percorso dove salvare i punti.
+- salvaSuStessoFile(): chiede un nuovo percorso dove salvare i punti.
+- tagliaTriangoloConBottone(): taglia il triangolo senza la modalità live.
+- tagliaTriangoloInLive(): chiede un nuovo percorso dove salvare i punti.
+- specchiaTriangolo(): taglia il triangolo senza la modalità live.
+- tagliaTriangoloInLive(): chiede un nuovo percorso dove salvare i punti.
 
-### Design procedurale
 
-Descrive i concetti dettagliati dell’architettura/sviluppo utilizzando
-ad esempio:
-
--   Diagrammi di flusso e Nassi.
-
--   Tabelle.
-
--   Classi e metodi.
-
--   Tabelle di routing
-
--   Diritti di accesso a condivisioni …
-
-Questi documenti permetteranno di rappresentare i dettagli procedurali
-per la realizzazione del prodotto.
+- main(String args): fa partire il programma.
+     
 
 ## Implementazione
 
-In questo capitolo dovrà essere mostrato come è stato realizzato il
-lavoro. Questa parte può differenziarsi dalla progettazione in quanto il
-risultato ottenuto non per forza può essere come era stato progettato.
+### Menu iniziale
 
-Sulla base di queste informazioni il lavoro svolto dovrà essere
-riproducibile.
+##### apriProgetto()
+<img src="img/ApriProgetto_StartMenu.png"
+     alt="Markdown Monster icon"/>
 
-In questa parte è richiesto l’inserimento di codice sorgente/print
-screen di maschere solamente per quei passaggi particolarmente
-significativi e/o critici.
+     
 
-Inoltre dovranno essere descritte eventuali varianti di soluzione o
-scelte di prodotti con motivazione delle scelte.
 
-Non deve apparire nessuna forma di guida d’uso di librerie o di
-componenti utilizzati. Eventualmente questa va allegata.
-
-Per eventuali dettagli si possono inserire riferimenti ai diari.
 
 ## Test
 
 ### Protocollo di test
-
-Definire in modo accurato tutti i test che devono essere realizzati per
-garantire l’adempimento delle richieste formulate nei requisiti. I test
-fungono da garanzia di qualità del prodotto. Ogni test deve essere
-ripetibile alle stesse condizioni.
 
 
 |Test Case      | TC-001                               |
