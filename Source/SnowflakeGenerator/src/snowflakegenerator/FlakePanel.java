@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.awt.event.ActionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * 
@@ -37,7 +38,7 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
     /**
      * Il colore dello sfondo del programma.
      */
-    private Color coloreSfondoDestro = Color.LIGHT_GRAY;
+    private Color coloreSfondoDestro = Color.black;
     
     /**
      * Il colore del triangolo non ritagliato.
@@ -212,7 +213,7 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
      */
     private void removeLastPoint(){
         punti.remove(punti.get(punti.size()-1));
-        puntiDaSalvare.add(puntiDaSalvare.get(puntiDaSalvare.size()-1));
+        puntiDaSalvare.remove(puntiDaSalvare.get(puntiDaSalvare.size()-1));
     }
     
     /**
@@ -469,6 +470,7 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
 
     private void bottoneGeneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottoneGeneraActionPerformed
         disegnaFiocco = true;
+        
         repaint();
     }//GEN-LAST:event_bottoneGeneraActionPerformed
 
@@ -496,16 +498,17 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
     private void salvaSuNuovoFile() {
         JFileChooser fileChooser = new JFileChooser();
 
-        //FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv");
-        //fileChooser.setFileFilter(filter);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files", "csv");
+        fileChooser.setFileFilter(filter);
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int ris = fileChooser.showOpenDialog(this);
         if (ris == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             this.percorsoSalvataggioPunti = selectedFile.getAbsolutePath();
-            try (PrintWriter writer = new PrintWriter(new File(selectedFile.getAbsolutePath()))) {
+            try (PrintWriter writer = new PrintWriter(new File(percorsoSalvataggioPunti))) {
                 StringBuilder sb = new StringBuilder();
+                System.out.println(puntiDaSalvare.size());
                 for(int i = 0; i < puntiDaSalvare.size(); i++){
                     sb.append(puntiDaSalvare.get(i).x);
                     sb.append(',');
@@ -516,6 +519,8 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
             }catch (FileNotFoundException e) {
               System.out.println(e.getMessage());
             }
+            this.punti.clear();
+            this.areaForma = new Area();
         } 
     }
     
@@ -527,11 +532,12 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
         if(!(this.percorsoSalvataggioPunti.isEmpty())){
             try (PrintWriter writer = new PrintWriter(new File(percorsoSalvataggioPunti) ) ) {
                     StringBuilder sb = new StringBuilder();
-                    for(int i = 0; i < puntiDaSalvare.size(); i++){
-                        sb.append(puntiDaSalvare.get(i).x);
+                    for(int i = 0; i < punti.size(); i++){
+                        sb.append(punti.get(i).x);
                         sb.append(',');
-                        sb.append(puntiDaSalvare.get(i).y);
+                        sb.append(punti.get(i).y);
                         sb.append('\n'); 
+                        
                     }
                   writer.write(sb.toString());
             }catch (FileNotFoundException e) {
@@ -569,10 +575,12 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
                 this.disegnaTriangoloFinito = false;
             }else{
                 this.areaForma.reset();
-                salvaSuStessoFile();
-                puntiDaSalvare = punti;
+                this.forma.reset();
                 this.punti.clear();
-                this.areaForma = new Area();
+                
+                areaForma = new Area();
+                
+                
                 disegnaFiocco = false;
                 this.disegnaTriangoloOriginale = false;
                 this.disegnaTriangoloFinito = true;
@@ -612,14 +620,15 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
                 this.disegnaTriangoloOriginale = true;
                 this.disegnaTriangoloFinito = false;
             }else{
-                salvaSuStessoFile();
                 puntiDaSalvare = punti;
-                this.disegnaTriangoloOriginale = false;
+                salvaSuStessoFile();
+                
+                areaForma = new Area();
+                this.disegnaTriangoloOriginale = true;
                 this.disegnaTriangoloFinito = true;
+                
             }   
-            repaint();
-            System.out.println("ho tagliato");
-            
+            System.out.println("ho tagliato");    
         }
     }
     
@@ -762,7 +771,7 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
             if(disegnaFiocco){
                 generaFiocco();
                 for (Shape shape : spostaFiocco()) {
-                    g2.setColor(Color.MAGENTA);
+                    g2.setColor(coloreSfondoSinistro);
                     g2.fill(shape);
                 }
                 //disegnaFiocco = false;
@@ -791,16 +800,18 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
         if(e.getButton() == MouseEvent.BUTTON1 && e.getPoint().x <= this.getWidth()/2){
             addPoint(e.getPoint());
             if(generazioneLive){
-                tagliaTriangoloInLive();
-                     
+                tagliaTriangoloInLive();   
+                
             }
             
             
         }else if (e.getButton() == MouseEvent.BUTTON3  && e.getPoint().x <= this.getWidth()/2) {
             if (punti.size() > 0) {
                 removeLastPoint();
+                
                 if(generazioneLive){
                     tagliaTriangoloInLive();
+                    
                 }
             }
         }
