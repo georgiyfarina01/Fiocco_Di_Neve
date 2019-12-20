@@ -135,6 +135,12 @@ public class StartMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_creaProgetto
 
+    /**
+     * Metodo utile per caricare i punti di un csv gia esistente.
+     * @param path indica il percorso del file.
+     * @return la lista di punti letta.
+     * @throws IOException 
+     */
     public ArrayList<Point> loadCSV(String path) throws IOException {
         ArrayList<Point> punti = new ArrayList<>();
         try {
@@ -144,9 +150,7 @@ public class StartMenu extends javax.swing.JFrame {
                 int x = Integer.parseInt(line.split(",")[0]);
                 int y =Integer.parseInt(line.split(",")[1]);
                 punti.add(new Point(x,y));
-            }
-            
-            
+            } 
         } catch (FileNotFoundException e) {
             System.out.println("Errore: file non trovato");
         }

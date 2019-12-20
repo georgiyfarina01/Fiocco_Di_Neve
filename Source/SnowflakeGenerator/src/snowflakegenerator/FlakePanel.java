@@ -503,10 +503,14 @@ public class FlakePanel extends javax.swing.JPanel implements MouseListener, Mou
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int ris = fileChooser.showOpenDialog(this);
         if (ris == JFileChooser.APPROVE_OPTION) {
-            String s = fileChooser.getSelectedFile().toString() + ".csv";
-            Path filePath = Paths.get(s);
+            String fileScelto = fileChooser.getSelectedFile().toString();
+            if( !(fileScelto.substring(fileScelto.length()-3, fileScelto.length())).equalsIgnoreCase("csv") ){
+                fileScelto +=  ".csv";
+            }
+            
+            Path filePath = Paths.get(fileScelto);
             File selectedFile = filePath.toFile();
-            System.out.println("Selected file: " + s + ".csv");
+            System.out.println("Selected file: " + fileScelto + ".csv");
             this.percorsoSalvataggioPunti = selectedFile.getAbsolutePath();
             try (PrintWriter writer = new PrintWriter(new File(percorsoSalvataggioPunti))) {
                 StringBuilder sb = new StringBuilder();
