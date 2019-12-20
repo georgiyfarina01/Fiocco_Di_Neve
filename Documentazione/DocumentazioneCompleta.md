@@ -55,7 +55,7 @@
 
 ### Abstract
 
-  Questo lavoro è stato assegnato con le stesse specifiche a 2 classi di informatica del terzo anno. Vi è stata possibilità di scegliere se sviluppare il software con l'ulitizzo o di Javascript, creando per questo un sito apposito interamente dedicato allo scopo, o di Java dove si doveva sviluppare un software scaricabile da un piccolo sito. Con l'utilizzo di questo strumento ora è possibile creare dei fiocchi in poco tempo semplicemente ritagliando un triangolo avendo così modo di scatenare all'infinito la propria fantasia facendo e rifacendo quanti fiocchi si vuole senza doverli buttare nel cestino nel caso non dovessero piacere.
+  Con l'utilizzo di questo strumento ora è possibile creare dei fiocchi in poco tempo semplicemente ritagliando un triangolo avendo così modo di scatenare all'infinito la propria fantasia facendo e rifacendo quanti fiocchi si vuole senza doverli buttare nel cestino nel caso non dovessero piacere.
 
 ### Scopo
 
