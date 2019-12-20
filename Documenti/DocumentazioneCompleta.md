@@ -88,8 +88,8 @@
 
 
 ### Use case
-
-VEDERE L'ESEMPIO DI BASKET 
+<img src="img/USE_CASE.png"
+     alt="Markdown Monster icon"/>
 
 ### Pianificazione
 
