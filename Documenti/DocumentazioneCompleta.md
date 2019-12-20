@@ -231,15 +231,105 @@ Questa classe si occupa della creazione e generazione del fiocco.
 ### Protocollo di test
 
 
-|Test Case      | TC-001                               |
+|Test Case      | TC-01                               |
 |---------------|--------------------------------------|
 |**Nome**       |Sito con download, descrizione e minimi requisiti del software|
 |**Riferimento**|REQ-01, REQ-02, REQ-03                               |
 |**Descrizione**|Bisogna vedere se c'è il sito per poter scaricare il software e se vi sono presenti descrizione e requisiti minimi per l'utilizzo|
 |**Prerequisiti**|Programma pubblicato e finito sul git|
 |**Procedura**     |andare sul sito citato nell'analisi del software e verificare il download provando a scaricare il programma|
-|**Risultati attesi** |Il download parte con successo|
+|**Risultati attesi** |Descrizione e requisiti del software con possibilità di scaricare il software|
+|**Risultati ottenuti** |Descrizione e requisiti sono presenti, il download parte correttamente|
+---
+---
 
+|Test Case      | TC-02                               |
+|---------------|--------------------------------------|
+|**Nome**       |Presenza di interfaccia grafica|
+|**Riferimento**|REQ-04                               |
+|**Descrizione**|Dev'essserci un interfaccia grafica per l'utilizzo del software|
+|**Prerequisiti**|-|
+|**Procedura**     |far partire il programma e vedere cosa appare|
+|**Risultati attesi** |Un'interfaccia grafica|
+|**Risultati ottenuti** |Interfaccia presente|
+
+---
+---
+
+|Test Case      | TC-03                               |
+|---------------|--------------------------------------|
+|**Nome**       |Triangolo posizionato correttamente|
+|**Riferimento**|REQ-05                            |
+|**Descrizione**|Il triangolo deve venir disegnato correttamente|
+|**Prerequisiti**|-|
+|**Procedura**     |far partire il programma e verificare dove si trova il triangolo|
+|**Risultati attesi** |Il triangolo si trova in mezzo al panel|
+|**Risultati ottenuti** |Il triangolo si trova in mezzo alla sua parte di panel|
+
+---
+---
+
+|Test Case      | TC-04                               |
+|---------------|--------------------------------------|
+|**Nome**       |Reset dei punti di ritaglio|
+|**Riferimento**|REQ-06                            |
+|**Descrizione**|Devo poter resettare i punti|
+|**Prerequisiti**|-|
+|**Procedura**     |Creare dei punti col tasto sinistro del mouse, dopodichè cliccare sul bottone "Reset"|
+|**Risultati attesi** |I punti devono sparire e devo poter ricreare una forma|
+|**Risultati ottenuti** |Posso resettare tutto e continuare a tagliare|
+
+---
+---
+
+|Test Case      | TC-05                             |
+|---------------|--------------------------------------|
+|**Nome**       |Generazione del fiocco classica|
+|**Riferimento**|REQ-07                            |
+|**Descrizione**|Devo poter generare il fiocco e mostrarlo nella finestra del software|
+|**Prerequisiti**|Poter ritagliare correttamente il triangolo|
+|**Procedura**     |Creare dei punti di ritaglio sul triangolo, cliccare "Taglia" e poi "Genera"|
+|**Risultati attesi** |Il fiocco stampato sulla parte destra del panel|
+|**Risultati ottenuti** |Il fiocco viene disegnato correttamente|
+
+---
+---
+
+|Test Case      | TC-06                             |
+|---------------|--------------------------------------|
+|**Nome**       |Generazione del fiocco in live|
+|**Riferimento**|REQ-08                         |
+|**Descrizione**|Devo poter generare il fiocco e mostrarlo nella finestra del software senza dover premere gli appositi bottoni|
+|**Prerequisiti**|Poter ritagliare il triangolo correttamente|
+|**Procedura**     |Cliccare sul bottone "live", creare dei punti di ritaglio sul triangolo|
+|**Risultati attesi** |Il fiocco stampato sulla parte destra del panel senza ulteriori interventi dell'utente|
+|**Risultati ottenuti** |Il fiocco viene disegnato correttamente, ma con un click di delay|
+
+---
+---
+
+|Test Case      | TC-07                             |
+|---------------|--------------------------------------|
+|**Nome**       |Rimozione e spostamento dei punti di ritaglio|
+|**Riferimento**|REQ-09                        |
+|**Descrizione**|Devo poter spostare e rimuovere i punti di ritaglio|
+|**Prerequisiti**|Avere il triangolo disegnato correttamente|
+|**Procedura**     |Creare dei punti di ritaglio e poi: per spostare tenere premuto su un punto e spostarlo, mentre per eliminarlo cliccare col tasto destro del mouse|
+|**Risultati attesi** |Rimozione e spostamento corretti|
+|**Risultati ottenuti** |Entrambi vengono svolti correttamente|
+
+---
+---
+
+|Test Case      | TC-08                             |
+|---------------|--------------------------------------|
+|**Nome**       |Rimozione e spostamento dei punti di ritaglio|
+|**Riferimento**|REQ-09                        |
+|**Descrizione**|Devo poter spostare e rimuovere i punti di ritaglio|
+|**Prerequisiti**|Avere il triangolo disegnato correttamente|
+|**Procedura**     |Creare dei punti di ritaglio e poi: per spostare tenere premuto su un punto e spostarlo, mentre per eliminarlo cliccare col tasto destro del mouse|
+|**Risultati attesi** |Rimozione e spostamento corretti|
+|**Risultati ottenuti** |Entrambi vengono svolti correttamente|
 
 ### Risultati test
 
