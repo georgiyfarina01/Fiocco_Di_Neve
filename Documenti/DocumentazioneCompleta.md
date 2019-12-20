@@ -98,10 +98,11 @@
 
 ### Analisi dei mezzi
  #### Software
- 
+  Il software è stato realizzato con l'utilizzo di NetBeans 11.1 e JDk 12.
+  Il link del sito dove risiede il download del file è il seguente: samtinfo.ch/i17fargeo/Snowflake
 
  #### Hardware
- Il progetto è stato realizzato interamente su un computer portatile Acer A717-71G con sistema operativo Windows 10 Home. Il link del sito dove risiede il download del file è il seguente: samtinfo.ch/i17fargeo/Snowflake
+ Il progetto è stato realizzato interamente su un computer portatile Acer A717-71G con sistema operativo Windows 10 Home.
 
 ## Progettazione
 
@@ -111,7 +112,7 @@
 Questa classe ha lo scopo di mostrare la schermata iniziale, dove vi è la possibilità di aprire un fiocco esistente o di crearne uno nuovo
 
 #### 3.1.2 Progettazione - Diagramma UML
-<img src="UML_StartMenu.png"
+<img src="img/UML_StartMenu.png"
      alt="Markdown Monster icon"/>
 
      
@@ -232,12 +233,12 @@ Questa classe si occupa della creazione e generazione del fiocco.
 
 |Test Case      | TC-001                               |
 |---------------|--------------------------------------|
-|**Nome**       |Import a card, but not shown with the GUI |
-|**Riferimento**|REQ-012                               |
-|**Descrizione**|Import a card with KIC, KID and KIK keys with no obfuscation, but not shown with the GUI |
-|**Prerequisiti**|Store on local PC: Profile\_1.2.001.xml (appendix n\_n) and Cards\_1.2.001.txt (appendix n\_n) |
-|**Procedura**     | - Go to “Cards manager” menu, in main page click “Import Profiles” link, Select the “1.2.001.xml” file, Import the Profile - Go to “Cards manager” menu, in main page click “Import Cards” link, Select the “1.2.001.txt” file, Delete the cards, Select the “1.2.001.txt” file, Import the cards |
-|**Risultati attesi** |Keys visible in the DB (OtaCardKey) but not visible in the GUI (Card details) |
+|**Nome**       |Sito con download, descrizione e minimi requisiti del software|
+|**Riferimento**|REQ-01, REQ-02, REQ-03                               |
+|**Descrizione**|Bisogna vedere se c'è il sito per poter scaricare il software e se vi sono presenti descrizione e requisiti minimi per l'utilizzo|
+|**Prerequisiti**|Programma pubblicato e finito sul git|
+|**Procedura**     |andare sul sito citato nell'analisi del software e verificare il download provando a scaricare il programma|
+|**Risultati attesi** |Il download parte con successo|
 
 
 ### Risultati test
@@ -250,60 +251,32 @@ l’errore con eventuali ipotesi di correzione.
 
 ### Mancanze/limitazioni conosciute
 
-Descrizione con motivazione di eventuali elementi mancanti o non
-completamente implementati, al di fuori dei test case. Non devono essere
-riportati gli errori e i problemi riscontrati e poi risolti durante il
-progetto.
+Per mancanza di tempo data dalle difficoltà incontrate durante l'implementazione, mancano i seguenti punti:
+- salvataggio dell'immagine PNG e SVG
+- ridimensionamento della schermata
 
 ## Consuntivo
+<img src="img/Consuntivo_attivita.png"
+     alt="Markdown Monster icon"
+     style="float:left;"/>
+<img src="img/Consuntivo_grafico.png"
+     alt="Markdown Monster icon"
+     style="float:left;"/>
 
-Consuntivo del tempo di lavoro effettivo e considerazioni riguardo le
-differenze rispetto alla pianificazione (cap 1.7) (ad esempio Gannt
-consuntivo).
 
 ## Conclusioni
 
-L'applicativo sviluppato facilita il compito della generazione di un fiocco, fatta precedentemente a mano. DOpo aver svolto il progetto mi sono accorto di quanta importanza si debba dare a certi particolari quali prevedere eventuali perdite di tempo, impegnarsi tanto nel tempo dedicato e non sottovalutare gli aspetti di implementazione che talvolta possono sembrare più facili.
+L'applicativo sviluppato facilita il compito della generazione di un fiocco, fatta precedentemente a mano. 
+Dopo aver svolto il progetto mi sono accorto di quanta importanza si debba dare al metterci più impegno di quello che si pensa si debba dare, altrimenti si finisce come me che ho preso la maggior parte degli aspetti sottogamba. Non bisogna sottovalutare i requisiti.
 Per quanto riguarda le disponibilità dell'utente nell'utilizzo, sicuramente si potrebbe fare di più, migliorare qualche dettaglio tralasciato per mancanza di tempo.
+
 
 ## Bibliografia
 
-### Bibliografia per articoli di riviste
-1.  Cognome e nome (o iniziali) dell’autore o degli autori, o nome
-    dell’organizzazione,
-
-2.  Titolo dell’articolo (tra virgolette),
-
-3.  Titolo della rivista (in italico),
-
-4.  Anno e numero
-
-5.  Pagina iniziale dell’articolo,
-
-### Bibliografia per libri
-
-
-1.  Cognome e nome (o iniziali) dell’autore o degli autori, o nome
-    dell’organizzazione,
-
-2.  Titolo del libro (in italico),
-
-3.  ev. Numero di edizione,
-
-4.  Nome dell’editore,
-
-5.  Anno di pubblicazione,
-
-6.  ISBN.
-
 ### Sitografia
 
-1.  URL del sito (se troppo lungo solo dominio, evt completo nel
-    diario),
-
-2.  Eventuale titolo della pagina (in italico),
-
-3.  Data di consultazione (GG-MM-AAAA).
+- https://stackoverflow.com, Stack Overflow, da 06.09 a 20.12
+- https://w3schools.com, W3Schools, da 13.12 a 20.12
 
 **Esempio:**
 
@@ -316,17 +289,10 @@ Elenco degli allegati, esempio:
 
 -   Diari di lavoro
 
--   Codici sorgente/documentazione macchine virtuali
+-   Codici sorgente
 
--   Istruzioni di installazione del prodotto (con credenziali
-    di accesso) e/o di eventuali prodotti terzi
+-   Sito con download e regole d'uso
 
--   Documentazione di prodotti di terzi
-
--   Eventuali guide utente / Manuali di utilizzo
-
--   Mandato e/o Qdc
+-   Qdc
 
 -   Prodotto
-
--   …
